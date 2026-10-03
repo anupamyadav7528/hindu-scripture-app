@@ -4,6 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
+  Linking,
   Pressable,
   Platform,
   ScrollView,
@@ -636,7 +637,7 @@ export default function App() {
           <View style={styles.premiumHeroIcon}><Text style={styles.premiumHeroIconText}>✧</Text></View>
           <Text style={styles.premiumOverline}>SANATAN PATH · PLUS</Text>
           <Text style={styles.premiumTitle}>Go a little deeper.</Text>
-          <Text style={styles.premiumSubtitle}>A simple way to support the project and open the full listening library.</Text>
+          <Text style={styles.premiumSubtitle}>The app and all included reading text are free. These optional plans preview future full-library listening benefits; no payment is collected.</Text>
           {appState.premiumDemo ? <View style={styles.unlockedBadge}><Text style={styles.unlockedBadgeText}>✓  DEMO ACCESS ACTIVE ON THIS DEVICE</Text></View> : null}
         </View>
         <View style={styles.plansRow}>
@@ -656,7 +657,7 @@ export default function App() {
             <Pressable style={styles.planButtonPrimary} onPress={purchaseDemo} disabled={submittingDemo} accessibilityRole="button">{submittingDemo ? <ActivityIndicator color="#fff" /> : <Text style={styles.planButtonPrimaryText}>{appState.premiumDemo ? "Demo access active" : "Try yearly · demo"}</Text>}</Pressable>
           </View>
         </View>
-        <Text style={styles.demoDisclaimer}>DEMO ONLY · No payment is collected. Tapping a plan unlocks premium features on this device only. Real billing, account sync, and subscription management are not configured.</Text>
+        <Text style={styles.demoDisclaimer}>DEMO ONLY · The app is free to use. Tapping a plan only previews a device-local unlock. Real billing, account sync, and subscription management are not configured.</Text>
         <View style={styles.premiumAdNote}><Text style={styles.premiumAdNoteTitle}>A considered experience</Text><Text style={styles.premiumAdNoteText}>Premium hides ad placements. Free-tier ad slots in this demo are placeholders only; no AdMob or AdSense inventory is connected.</Text></View>
       </>
     );
@@ -666,6 +667,44 @@ export default function App() {
     return (
       <>
         <PageTitle kicker="BEYOND THE PAGE" title="Practice, shared." subtitle="Small ways to keep this project growing—and a glimpse of what we're exploring." />
+        <View style={styles.developerCard}>
+          <View style={styles.developerIdentity}>
+            <View style={styles.developerAvatar}><Text style={styles.developerAvatarText}>AY</Text></View>
+            <View style={styles.developerCopy}>
+              <Text style={styles.developerEyebrow}>DEVELOPER & PROJECT OWNER</Text>
+              <Text style={styles.developerName}>Anupam Yadav</Text>
+              <Text style={styles.developerSubtitle}>Building and maintaining Sanatan Path</Text>
+            </View>
+          </View>
+          <Text style={styles.developerDescription}>Manage the website source, content, and publishing workflow from the project’s GitHub repository. Sign in to GitHub with the owner account to make changes.</Text>
+          <View style={styles.adminLinks}>
+            <Pressable
+              style={styles.manageProjectButton}
+              onPress={() => Linking.openURL("https://github.com/anupamyadav7528/hindu-scripture-app").catch((error: unknown) => {
+                console.error("Could not open the project repository", error);
+                setToast("Could not open GitHub on this device");
+              })}
+              accessibilityRole="link"
+            >
+              <Text style={styles.manageProjectButtonText}>Manage source & workflow  ↗</Text>
+            </Pressable>
+            <Pressable
+              style={styles.manageProjectButton}
+              onPress={() => Linking.openURL("https://github.com/anupamyadav7528/hindu-scripture-app/settings/pages").catch((error: unknown) => {
+                console.error("Could not open GitHub Pages settings", error);
+                setToast("Could not open GitHub Pages settings");
+              })}
+              accessibilityRole="link"
+            >
+              <Text style={styles.manageProjectButtonText}>Website publishing settings  ↗</Text>
+            </Pressable>
+          </View>
+          <Text style={styles.developerDisclaimer}>This MVP has no secure in-app admin dashboard or cloud CMS. GitHub manages the code and website deployment; subscriptions, advertising, donations, and orders are not connected to live providers.</Text>
+        </View>
+        <View style={styles.freeAccessNote}>
+          <Text style={styles.freeAccessTitle}>Free to start, no account required</Text>
+          <Text style={styles.freeAccessBody}>All included sample reading text, summaries, bookmarks, and offline text are free. The first {FREE_AUDIO_CHAPTERS} Gita audio chapters are free; the optional ₹99/month or ₹499/year plans are demo previews and collect no payment.</Text>
+        </View>
         <View style={styles.donationCard}>
           <View style={styles.donationMark}><Text style={styles.donationMarkText}>दीप</Text></View>
           <Text style={styles.donationEyebrow}>SUPPORT THE JOURNEY</Text>
@@ -720,7 +759,7 @@ export default function App() {
         <ScrollView style={styles.mainScroll} contentContainerStyle={styles.mainContent} showsVerticalScrollIndicator={false}>
           {!wide && page !== "home" && page !== "reader" ? <Text style={styles.mobilePageLabel}>{pageLabel[page]}</Text> : null}
           {renderPage()}
-          <View style={styles.footer}><Text style={styles.footerBrand}>ॐ  sanatan path</Text><Text style={styles.footerText}>A growing reading companion · Demo edition · © Sanatan Path</Text><Pressable onPress={() => setPage("services")} accessibilityRole="button"><Text style={styles.footerLink}>Support this project</Text></Pressable></View>
+          <View style={styles.footer}><Text style={styles.footerBrand}>ॐ  sanatan path</Text><Text style={styles.footerText}>Developed by Anupam Yadav · Demo edition · © Sanatan Path</Text><Pressable onPress={() => setPage("services")} accessibilityRole="button"><Text style={styles.footerLink}>Support & owner details</Text></Pressable></View>
         </ScrollView>
       </View>
       {!wide && <BottomNav />}
@@ -963,6 +1002,22 @@ function makeStyles(p: Palette, wide: boolean) {
     premiumAdNoteTitle: { color: p.text, fontFamily: font.display, fontSize: 14 },
     premiumAdNoteText: { color: p.muted, fontSize: 10, lineHeight: 16, marginTop: 5 },
     donationCard: { maxWidth: 530, alignSelf: "center", width: "100%", padding: wide ? 28 : 20, alignItems: "center", borderRadius: 16, borderWidth: 1, borderColor: p.line, backgroundColor: p.surface },
+    developerCard: { padding: wide ? 21 : 17, borderRadius: 14, borderWidth: 1, borderColor: p.line, backgroundColor: p.surface, marginBottom: 14 },
+    developerIdentity: { flexDirection: "row", alignItems: "center", gap: 12 },
+    developerAvatar: { width: 46, height: 46, borderRadius: 16, alignItems: "center", justifyContent: "center", backgroundColor: p.accentSoft },
+    developerAvatarText: { color: p.accent, fontSize: 14, fontWeight: "700" },
+    developerCopy: { flex: 1 },
+    developerEyebrow: { color: p.gold, fontSize: 8, letterSpacing: 1.1, fontWeight: "700" },
+    developerName: { color: p.text, fontFamily: font.display, fontSize: 19, marginTop: 3 },
+    developerSubtitle: { color: p.muted, fontSize: 10, marginTop: 3 },
+    developerDescription: { color: p.muted, fontSize: 11, lineHeight: 18, marginTop: 14 },
+    adminLinks: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
+    manageProjectButton: { alignSelf: "flex-start", paddingHorizontal: 13, paddingVertical: 10, borderRadius: 9, backgroundColor: p.accentSoft, marginTop: 12 },
+    manageProjectButtonText: { color: p.accent, fontSize: 10, fontWeight: "700" },
+    developerDisclaimer: { color: p.muted, fontSize: 9, lineHeight: 15, marginTop: 12 },
+    freeAccessNote: { padding: wide ? 19 : 16, borderRadius: 13, backgroundColor: p.accentSoft, marginBottom: 18 },
+    freeAccessTitle: { color: p.accent, fontFamily: font.display, fontSize: 16 },
+    freeAccessBody: { color: p.text, fontSize: 10, lineHeight: 16, marginTop: 6 },
     donationMark: { width: 49, height: 49, borderRadius: 17, backgroundColor: p.goldSoft, alignItems: "center", justifyContent: "center" },
     donationMarkText: { color: p.gold, fontSize: 18, fontFamily: font.display },
     donationEyebrow: { color: p.gold, fontSize: 8, letterSpacing: 1.6, fontWeight: "700", marginTop: 14 },
