@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "Sanatan Path",
+    "slug": "sanatan-path",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "backgroundColor": "#142820"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "permissions": [
+        "android.permission.RECEIVE_BOOT_COMPLETED",
+        "android.permission.SCHEDULE_EXACT_ALARM",
+        "android.permission.VIBRATE"
+      ],
+      "adaptiveIcon": {
+        "backgroundColor": "#142820"
+      }
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "defaultChannel": "daily-reflection"
+        }
+      ]
+    ],
+    "web": {
+      "bundler": "metro",
+      "name": "Sanatan Path",
+      "shortName": "Sanatan Path",
+      "themeColor": "#142820"
+    },
+    "experiments": {
+      "baseUrl": "/hindu-scripture-app"
+    }
+  }
+}
