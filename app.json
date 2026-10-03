@@ -34,6 +34,9 @@
       "name": "Sanatan Path",
       "shortName": "Sanatan Path",
       "themeColor": "#142820"
+    },
+    "experiments": {
+      "baseUrl": "/hindu-scripture-app"
     }
   }
 }

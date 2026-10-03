@@ -13,6 +13,19 @@ npm run web
 
 For the native development server, run `npm start` and open the project in an iOS simulator or Android emulator. Expo Go can be used for device previews. Use `npm run typecheck` to check TypeScript or `npm run build:web` to export a static web build to `dist/`.
 
+## Publish to GitHub Pages
+
+The GitHub Actions workflow builds and deploys the static web export to
+`https://anupamyadav7528.github.io/hindu-scripture-app/` when changes are pushed
+to `main` or the MVP branch. The Expo web base path is configured for this
+repository subpath; native iOS and Android builds do not use it.
+
+In the repository's **Settings → Pages**, set the build and deployment source
+to **GitHub Actions** if it is not already enabled. The workflow needs no
+secrets; it uses the repository's `GITHUB_TOKEN` with only Pages deployment,
+OIDC, and read-only contents permissions. To deploy manually, select the
+workflow in the Actions tab and choose **Run workflow**.
+
 ## MVP features
 
 - Responsive Home, scripture Library, chapter/verse reader, Saved, Premium, and Support screens.

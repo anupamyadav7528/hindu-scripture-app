@@ -399,7 +399,7 @@ export default function App() {
     return (
       <>
         <BackgroundVideo
-          source="./public/assets/bg.mp4"
+          source="./assets/bg.mp4"
           overlayColor={palette.inverse}
           overlayOpacity={0.32}
         >
